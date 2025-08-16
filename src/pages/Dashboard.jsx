@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 
 import ParameterCard from "../components/ParameterCard";
 
-
-import {normalRangesByAge} from "../data/normalRangesByAge.js"
+import { normalRangesByAge } from "../data/normalRangesByAge.js";
 
 import { initialParameters } from "../data/parameters";
 import { FaNotesMedical } from "react-icons/fa";
@@ -17,42 +16,48 @@ export default function Dashboard({ darkMode }) {
     ageYears: "",
     ageMonths: "",
     weight: "",
-    diagnosis: ""
+    diagnosis: "",
   });
 
   // بررسی مقدار جدید و تعیین isCritical
- const handleParameterChange = (id, newValue) => {
-  setParameters((prev) =>
-    prev.map((p) => {
-      if (p.id !== id) return p;
+  const handleParameterChange = (id, newValue) => {
+    setParameters((prev) =>
+      prev.map((p) => {
+        if (p.id !== id) return p;
 
-      const value = newValue === "" ? "" : parseFloat(newValue);
-      const ranges = normalRangesByAge(patient.ageYears || 0, patient.ageMonths || 0);
-      const normalRange = ranges[p.title] || [null, null];
+        const value = newValue === "" ? "" : parseFloat(newValue);
+        const ranges = normalRangesByAge(
+          patient.ageYears || 0,
+          patient.ageMonths || 0
+        );
+        const normalRange = ranges[p.title] || [null, null];
 
-      let isCritical = false;
-      if (value !== "" && !isNaN(value) && normalRange[0] !== null) {
-        isCritical = value < normalRange[0] || value > normalRange[1];
-      }
+        let isCritical = false;
+        if (value !== "" && !isNaN(value) && normalRange[0] !== null) {
+          isCritical = value < normalRange[0] || value > normalRange[1];
+        }
 
-      return { ...p, value, normalRange: normalRange.join("-"), isCritical };
-    })
-  );
-};
+        return { ...p, value, normalRange: normalRange.join("-"), isCritical };
+      })
+    );
+  };
 
-useEffect(() => {
-  const ranges = normalRangesByAge(patient.ageYears || 0, patient.ageMonths || 0);
-  setParameters((prev) =>
-    prev.map((p) => {
-      const normalRange = ranges[p.title] || [null, null];
-      let isCritical = false;
-      if (p.value !== "" && !isNaN(p.value) && normalRange[0] !== null) {
-        isCritical = p.value < normalRange[0] || p.value > normalRange[1];
-      }
-      return { ...p, normalRange: normalRange.join("-"), isCritical };
-    })
-  );
-}, [patient.ageYears, patient.ageMonths]);
+  useEffect(() => {
+    const ranges = normalRangesByAge(
+      patient.ageYears || 0,
+      patient.ageMonths || 0
+    );
+    setParameters((prev) =>
+      prev.map((p) => {
+        const normalRange = ranges[p.title] || [null, null];
+        let isCritical = false;
+        if (p.value !== "" && !isNaN(p.value) && normalRange[0] !== null) {
+          isCritical = p.value < normalRange[0] || p.value > normalRange[1];
+        }
+        return { ...p, normalRange: normalRange.join("-"), isCritical };
+      })
+    );
+  }, [patient.ageYears, patient.ageMonths]);
 
   const handlePatientWeightChange = (value) => {
     if (value === "" || (/^\d+\.?\d*$/.test(value) && Number(value) >= 0)) {
@@ -161,9 +166,8 @@ useEffect(() => {
                 <option value="شوک کاردیوژنیک">شوک کاردیوژنیک</option>
                 <option value="شوک هیپوولمیک">شوک هیپوولمیک</option>
                 <option value="شوک آنافیلاکتیک">شوک آنافیلاکتیک</option>
-               
               </optgroup>
-              
+
               <optgroup label="دیگر شرایط">
                 <option value="دیس ریتمی قلبی">دیس ریتمی قلبی</option>
                 <option value="کاردیومیوپاتی">میوکاردیت</option>
@@ -175,8 +179,6 @@ useEffect(() => {
               </optgroup>
             </select>
           </div>
-
-         
         </div>
 
         {/* ستون وسط */}
@@ -201,7 +203,6 @@ useEffect(() => {
         </div>
 
         {/* ستون راست */}
-        
       </div>
     </div>
   );
