@@ -6,6 +6,7 @@ import { normalRangesByAge } from "../data/normalRangesByAge.js";
 
 import { initialParameters } from "../data/parameters";
 import { FaNotesMedical } from "react-icons/fa";
+import TreatmentGuide from "../components/TreatmentGuide.jsx";
 
 export default function Dashboard({ darkMode }) {
   const [parameters, setParameters] = useState(
@@ -203,6 +204,13 @@ export default function Dashboard({ darkMode }) {
         </div>
 
         {/* ستون راست */}
+         <div className="lg:col-span-1 space-y-6">
+          <TreatmentGuide
+            parameters={parameters}
+            patient={patient}
+            darkMode={darkMode}
+          />
+        </div>
       </div>
     </div>
   );
